@@ -1,6 +1,7 @@
 # ERP-
 卓俊良ZhuoJunliang的ERP系統網頁板
 # 臺南市噪音監測站監測數據
+![image](https://github.com/user-attachments/assets/21011668-7d0d-4ecb-b7e9-893489913f59)
 
 此專案使用 jQuery 透過 AJAX 向 [臺南市噪音監測 API](https://soa.tainan.gov.tw/Api/Service/Get/895dc515-d959-45be-a48e-0c07caf65d2e) 發送請求，以獲取噪音監測站的監測數據，並以 HTML 表格的形式呈現。
 
