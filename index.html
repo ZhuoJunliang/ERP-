@@ -18,6 +18,7 @@ https://data.gov.tw/dataset/101813
 <!DOCTYPE html>
 <html>
   <head>
+    <title>發佈到github上</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
       $(document).ready(function () {
@@ -45,7 +46,7 @@ https://data.gov.tw/dataset/101813
 
             //如果資料正確
             if (data.success) {
-              data.data.forEach(station => {
+              data.data.forEach((station) => {
                 // console.log(station);
                 table += `<tr>
                   <td>${station.Seq}</td>
