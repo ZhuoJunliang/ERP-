@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap 5 Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- bootstrap5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jquery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        let msg歷史資料 = "";
+        let btnIndex = 3;
+        let idTemp = ""; //保存ID，判斷是否為修改
+        const $button1 = $("#button1"); //減少選擇器使用，降低系統操作
+        const $email = $("#email");
+        const $info = $("#info");
+        console.log($info);
+        console.log(document.getElementById("info"));
+
+        //清空資料
+        const clearMsg = function () {
+          $email.val("");
+          $info.val("");
+          $button1.text("添加資料");
+          idTemp = "";
+        };
+
+        //添加刪除、修改按鈕的點擊事件
+        const delModifyBtn = function (btnIndex) {
+          $(`#btn-delete${btnIndex}`).on("click", function () {
+            $(this).parents("tr").remove();
+            clearMsg();
+          });
+
+          $(`#btn-modify${btnIndex}`).on("click", function () {
+            idTemp = "#" + $(this).attr("id");
+            $button1.text("確認修改");
+            //這邊$(idTemp).parents("tr").children("td")[0]選完變成dom，於是前面要加上$才會是jQuery，改用:eq(n)可能會比較好。
+            $email.val($($(idTemp).parents("tr").children("td")[0]).text());
+            $info.val($($(idTemp).parents("tr").children("td")[1]).text());
+          });
+        };
+
+        $button1.click(function () {
+          let emailMsg = $email.val();
+          let infoMsg = $info.val();
+          //將ID設在tr上，然後使用時再選取後代會比較方便。不過這邊用別人檔案，就不改動了。
+          let html1 = `<tr>
+                      <td>${emailMsg} </td>
+                      <td>${infoMsg} </td>
+                      <td>
+                        <button id="btn-delete${btnIndex}">刪除</button>
+                        <button id="btn-modify${btnIndex}">修改</button>
+                      </td>
+                    </tr> `;
+
+          //如果idTemp為空則添加，不為空則修改
+          if (idTemp === "") {
+            $("#tbody1").append(html1);
+            $email.val("");
+            $info.val("");
+
+            delModifyBtn(btnIndex);
+
+            btnIndex++;
+          } else {
+            $($(idTemp).parents("tr").children("td")[0]).text(emailMsg);
+            $($(idTemp).parents("tr").children("td")[1]).text(infoMsg);
+            clearMsg();
+          }
+        });
+
+        //按鈕2清除資料和ID暫存
+        $("#button2").click(function () {
+          clearMsg();
+        });
+
+        //添加初始資料按鈕ID
+        for (let i = 1; i <= 2; i++) {
+          delModifyBtn(i);
+        }
+      }); //end of $(document).ready(function ()
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="mt-4 p-5 bg-secondary text-white rounded">
+        <h1>XXX ERP 系統</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat..
+        </p>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" placeholder="name@example.com" />
+      </div>
+      <div class="mb-3">
+        <label for="info" class="form-label">Example textarea</label>
+        <textarea class="form-control" id="info" rows="3"></textarea>
+      </div>
+      <button type="button" class="btn btn-primary" id="button1">添加資料</button>
+      <button type="button" class="btn btn-secondary" id="button2">清空上面</button>
+      <p></p>
+      <hr />
+      <p></p>
+
+      <table class="table table-striped table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Email</th>
+            <th scope="col">資訊</th>
+            <th scope="col">按鈕群</th>
+          </tr>
+        </thead>
+        <tbody id="tbody1">
+          <tr>
+            <td>stenen52@gmail.com</td>
+            <td>Otto</td>
+            <td>
+              <button id="btn-delete1">刪除</button>
+              <button id="btn-modify1">修改</button>
+            </td>
+          </tr>
+          <tr>
+            <td>jydy125@gmail.com</td>
+            <td>Thornton</td>
+            <td>
+              <button id="btn-delete2">刪除</button>
+              <button id="btn-modify2">修改</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
